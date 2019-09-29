@@ -28,5 +28,6 @@ target
 out
 venv
 *.iml
+*.pyc
 
 __pycache__

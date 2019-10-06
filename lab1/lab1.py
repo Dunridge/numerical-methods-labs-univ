@@ -2,6 +2,7 @@
 # (варіант 7: 3*х + cos(x) + 1 = 0)
 
 import numpy as np
+import math
 
 
 def incorrect_method_number():
@@ -18,7 +19,9 @@ def choose_solution_method(chosen_method):
         a = int(input("enter the parameter a: "))
         b = int(input("enter the parameter b: "))
         eps = float(input("enter the parameter eps: "))  # you might want to make this double or float
-        dichotomy_method(a, b, eps)
+        #dichotomy_method(a, b, eps)
+        x = dichotomy_method(a, b, eps)
+        print("x: ", x, "f(x): ", variant_function(x))
         return
     if chosen_method == 2:
         a = int(input("enter the parameter a: "))
@@ -33,21 +36,40 @@ def choose_solution_method(chosen_method):
 
 
 def variant_function(x):
-    #return x**3 + 3*(x**2) - 1  # <-- test function, this doesn't work properly
+    # return x**3 + 3*(x**2) - 1  # <-- test function, this doesn't work properly
     return 3 * x + np.cos(x) + 1
 
 
-def dichotomy_method(a, b, eps):
-    # (варіант 7: 3*х + cos(x) + 1 = 0)
-    while abs(b - a) > eps:
-        x = (a + b) / 2.0
-        fx = variant_function(x)
-        fa = variant_function(a)
-        if (fx < 0 and fa < 0) or (fx > 0 and fa > 0):
-            a = x
-        else:
-            b = x
-    print("the minimal x is ", x)
+def sign(x):
+    if x < 0:
+        return -1
+    elif x == 0:
+        return 0
+    return 1
+
+
+def dichotomy_method(a, b, epsilon):
+    next_left_border = a
+    next_right_border = b
+    next_step = (next_left_border + next_right_border) / 2
+    function = lambda x: 3 * x + np.cos(x) + 1
+    if function(a) * function(b) > 0:
+        return -1
+    error = 1
+    prior_evaluation = int(math.log2((b - a) / epsilon)) + 1
+    posterior_evaluation = 1
+    while error > epsilon:
+        previous_step = next_step
+        next_left_border = previous_step if sign(function(next_left_border)) == sign(
+            function(previous_step)) else next_left_border
+        next_right_border = previous_step if sign(function(next_right_border)) == sign(
+            function(previous_step)) else next_right_border
+        next_step = (next_left_border + next_right_border) / 2
+        error = abs(next_step - previous_step)
+        posterior_evaluation += 1
+    print('prior evaluation : ', prior_evaluation)
+    print('posterior evaluation :', posterior_evaluation)
+    return next_step
 
 
 # check the method on an online calculator - see this website for solutions:
@@ -66,7 +88,8 @@ def relaxation_method(a, b, x0, eps):
     # call the dichotomy and return:
     num_of_iterations = 0
     if F1 * F2 < 0:
-        dichotomy_method(a, b, eps)
+        x = dichotomy_method(a, b, eps)
+        print("x: ", x, "f(x): ", variant_function(x))
         return
         # while abs(res) < eps:
         #     xp = x0

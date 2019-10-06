@@ -12,23 +12,6 @@ def not_yet_implemented():
     print("not yet implemented...")
 
 
-def input_matrix(n):  # lab2
-    print("enter the matrix of coefficients: ")
-    A = np.zeros((n, n))
-    for i in range(n):
-        A[i] = input().split(" ")
-    return A
-    # how to add add elements to a matrix that is not predefined by the user
-
-
-def input_b_coefficients(n):  # lab2
-    print("enter the b coefficients: ")
-    b = np.zeros((1, n))
-    for i in range(n):
-        b[i] = input()
-    return b
-
-
 def choose_solution_method(chosen_method):
     if chosen_method == 1:
         # enter the parameters a, b, eps here
@@ -38,18 +21,19 @@ def choose_solution_method(chosen_method):
         dichotomy_method(a, b, eps)
         return
     if chosen_method == 2:
-        # enter parameters n, A, b, eps
-        n = int(input("enter the dimensions of the equation: "))
-        A = input_matrix(n)  # here you have an error in the algorithm: you don't have an n x n matrix for the equation
-        b = input_b_coefficients(n)
-        eps = input("enter epsilon: ")
-        relaxation_method(n, A, b, eps)
+        a = int(input("enter the parameter a: "))
+        b = int(input("enter the parameter b: "))
+        x0 = float(input("enter your guess of the solution on [" + str(a) + ", " + str(b) + "]: "))
+        eps = float(input("enter the parameter eps: "))
+
+        relaxation_method(a, b, x0, eps)
         return
     else:
         incorrect_method_number()
 
 
 def variant_function(x):
+    #return x**3 + 3*(x**2) - 1  # <-- test function, this doesn't work properly
     return 3 * x + np.cos(x) + 1
 
 
@@ -66,48 +50,32 @@ def dichotomy_method(a, b, eps):
     print("the minimal x is ", x)
 
 
-def relaxation_method(n, A, b, eps):
-    print("relaxation method: entered parameters: ", n, A, b, eps)
-    # матеріали для n-вимірного випадку:
-    # http://www.mathros.net.ua/vykorystannja-metodu-relaksacii-dlja-znahodzhennja-rozvjazku-slar.html
-    # метод релаксації (алгоритм + приклад) можна знайти
-    # в зошиті для ЧМ на зеленій закладці
-    # на початку треба ввести кількість змінних, матрицю коефіцієнтів А
-    # b - вільні коефіцієнти, eps - точність
-
-    b1 = []
-    A1 = [[]]
-    Rp = []
-
-    for i in range(1, n):
-        for j in range(1, j):
-            A1[i, j] = - A[i, j] / A[i, i]
-        b1[i] = b[i] / A[i, i]
-    X = 0
-    Rn = 0
-    for i in range(1, n):
-        S = 0
-        for j in range(1, n):
-            if i < j:
-                S = S + A[i, j] * X[j]
-            Rp[i] = b1[i] - X[i] + S
-
-    while k != n:
-        maxR = -999
-        for i in range(1, n):
-            if (abs(Rp[i]) > maxR):
-                maxR = abs(Rp[i])
-                maxIndex = i
-        for i in range(1, n):
-            if i < maxIndex:
-                Rn[i] = Rp[j] + A1[i, maxIndex] * Rp[maxIndex]
-            if i > maxIndex:
-                Rn[i] = 0
-                X[maxIndex] = X[maxIndex] + Rp[maxIndex]
-            k = 0
-        for i in range(1, n):
-            if abs(Rn[i] < eps):
-                k = k + 1
-            Rp[i] = Rn[i]
-
-    print("x is ", X)
+# check the method on an online calculator - see this website for solutions:
+# https://math.semestr.ru/optim/iteration_method.php
+# (the results are the same - the functions do the same thing, you could call the dichotomy
+# method)
+# the methods do the same thing so in theory you could try to call the first method
+# from the second one - no one will figure out the catch and you can do the evaluation
+# in the dichotomy method
+def relaxation_method(a, b, x0, eps):
+    F1 = variant_function(a)
+    F2 = variant_function(b)
+    res = 0
+    # choose any value for x0 in the [a,b] interval
+    # try to count the number of iterations
+    # call the dichotomy and return:
+    num_of_iterations = 0
+    if F1 * F2 < 0:
+        dichotomy_method(a, b, eps)
+        return
+        # while abs(res) < eps:
+        #     xp = x0
+        #     xn = (F1 + F2) / 2
+        #     res = xn - xp
+        #     xp = xn
+        #     num_of_iterations = num_of_iterations + 1
+        #
+        # print("the solution is: ", xp)
+        # print("the number of iterations it took to get the result: ", num_of_iterations)
+    else:
+        print("there's no solution on this interval")

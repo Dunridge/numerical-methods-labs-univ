@@ -19,7 +19,7 @@ def choose_solution_method(chosen_method):
         a = int(input("enter the parameter a: "))
         b = int(input("enter the parameter b: "))
         eps = float(input("enter the parameter eps: "))  # you might want to make this double or float
-        #dichotomy_method(a, b, eps)
+        # dichotomy_method(a, b, eps)
         x = dichotomy_method(a, b, eps)
         print("x: ", x, "f(x): ", variant_function(x))
         return
@@ -28,15 +28,20 @@ def choose_solution_method(chosen_method):
         b = int(input("enter the parameter b: "))
         x0 = float(input("enter your guess of the solution on [" + str(a) + ", " + str(b) + "]: "))
         eps = float(input("enter the parameter eps: "))
+        phi = lambda x_input: -(np.cos(x) + 1) / 3
+        Dphi = lambda x: np.sin(x) / 3
+        max_iter = 100  # or 1000
 
-        relaxation_method(a, b, x0, eps)
+        # def relaxation_method_v2(f, Dphi, x0, eps, max_iter):
+        # x0 - is the initial guess
+        relaxation_method_v2(variant_function, Dphi, x0, eps, max_iter)
+        # relaxation_method(a, b, x0, eps)
         return
     else:
         incorrect_method_number()
 
 
 def variant_function(x):
-    # return x**3 + 3*(x**2) - 1  # <-- test function, this doesn't work properly
     return 3 * x + np.cos(x) + 1
 
 
@@ -72,33 +77,24 @@ def dichotomy_method(a, b, epsilon):
     return next_step
 
 
-# check the method on an online calculator - see this website for solutions:
-# https://math.semestr.ru/optim/iteration_method.php
-# (the results are the same - the functions do the same thing, you could call the dichotomy
-# method)
-# the methods do the same thing so in theory you could try to call the first method
-# from the second one - no one will figure out the catch and you can do the evaluation
-# in the dichotomy method
-def relaxation_method(a, b, x0, eps):
-    F1 = variant_function(a)
-    F2 = variant_function(b)
-    res = 0
-    # choose any value for x0 in the [a,b] interval
-    # try to count the number of iterations
-    # call the dichotomy and return:
-    num_of_iterations = 0
-    if F1 * F2 < 0:
-        x = dichotomy_method(a, b, eps)
-        print("x: ", x, "f(x): ", variant_function(x))
-        return
-        # while abs(res) < eps:
-        #     xp = x0
-        #     xn = (F1 + F2) / 2
-        #     res = xn - xp
-        #     xp = xn
-        #     num_of_iterations = num_of_iterations + 1
-        #
-        # print("the solution is: ", xp)
-        # print("the number of iterations it took to get the result: ", num_of_iterations)
-    else:
-        print("there's no solution on this interval")
+# phi = lambda(x): -(np.cos(x) + 1)/3
+# Dphi = lambda(x): np.sin(x)/3
+# max_iter = 100 or 1000
+# deleted Df and phi because they weren't used in the method
+def relaxation_method_v2(f, Dphi, x0, eps, max_iter):  # , Df, phi
+    xn = x0
+    a = 0.5
+    b = 1.5
+    m1 = Dphi(a)
+    M1 = Dphi(b)
+    tau = 2 / (M1 + m1)
+    print(tau)
+    for n in range(0, max_iter):
+        fxn = f(xn)
+        print("function f is", fxn)
+        if abs(fxn) < eps:
+            print('Found solution after', n, 'iterations')
+            return xn
+        xn = xn + tau * fxn  # +/- depending on the derivative
+    print("Exceeded maximum iterations")
+    return None

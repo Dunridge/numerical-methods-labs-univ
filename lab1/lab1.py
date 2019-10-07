@@ -34,7 +34,7 @@ def choose_solution_method(chosen_method):
 
         # def relaxation_method_v2(f, Dphi, x0, eps, max_iter):
         # x0 - is the initial guess
-        relaxation_method_v2(variant_function, Dphi, x0, eps, max_iter)
+        relaxation_method(variant_function, Dphi, x0, eps, max_iter)
         # relaxation_method(a, b, x0, eps)
         return
     else:
@@ -81,7 +81,7 @@ def dichotomy_method(a, b, epsilon):
 # Dphi = lambda(x): np.sin(x)/3
 # max_iter = 100 or 1000
 # deleted Df and phi because they weren't used in the method
-def relaxation_method_v2(f, Dphi, x0, eps, max_iter):  # , Df, phi
+def relaxation_method(f, Dphi, x0, eps, max_iter):  # , Df, phi
     xn = x0
     a = 0.5
     b = 1.5

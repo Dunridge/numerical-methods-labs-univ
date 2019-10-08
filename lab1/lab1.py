@@ -30,11 +30,11 @@ def choose_solution_method(chosen_method):
         eps = float(input("enter the parameter eps: "))
         phi = lambda x_input: -(np.cos(x) + 1) / 3
         Dphi = lambda x: np.sin(x) / 3
-        max_iter = 100  # or 1000
+        max_iter = 1000  # or 1000
 
         # def relaxation_method_v2(f, Dphi, x0, eps, max_iter):
         # x0 - is the initial guess
-        relaxation_method(variant_function, Dphi, x0, eps, max_iter)
+        print(relaxation_method(variant_function, Dphi, x0, eps, max_iter))
         # relaxation_method(a, b, x0, eps)
         return
     else:
@@ -70,6 +70,7 @@ def dichotomy_method(a, b, epsilon):
         next_right_border = previous_step if sign(function(next_right_border)) == sign(
             function(previous_step)) else next_right_border
         next_step = (next_left_border + next_right_border) / 2
+        #print(next_step)
         error = abs(next_step - previous_step)
         posterior_evaluation += 1
     print('prior evaluation : ', prior_evaluation)
@@ -82,19 +83,26 @@ def dichotomy_method(a, b, epsilon):
 # max_iter = 100 or 1000
 # deleted Df and phi because they weren't used in the method
 def relaxation_method(f, Dphi, x0, eps, max_iter):  # , Df, phi
-    xn = x0
-    a = 0.5
-    b = 1.5
-    m1 = Dphi(a)
-    M1 = Dphi(b)
+    xn = 0
+    a = -2
+    b = 0
+    m1 = 2
+    M1 = 4
+    #m1 = Dphi(a)
+    #M1 = Dphi(b)
+    print(m1)
+    print(M1)
     tau = 2 / (M1 + m1)
+    #tau = 0.01
+    tau = 0.005
     print(tau)
     for n in range(0, max_iter):
         fxn = f(xn)
         print("function f is", fxn)
+        print("x is ", xn) # prints xn
         if abs(fxn) < eps:
             print('Found solution after', n, 'iterations')
             return xn
-        xn = xn + tau * fxn  # +/- depending on the derivative
+        xn = xn - tau * fxn  # +/- depending on the derivative
     print("Exceeded maximum iterations")
     return None

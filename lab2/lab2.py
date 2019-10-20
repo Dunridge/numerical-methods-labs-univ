@@ -87,8 +87,8 @@ def jacobi_method(iteration_limit):  # this doesn't work properly (you have to i
 
     # determinant:
     print("Determinant: ", np.linalg.det(A))
-    # число обумовленості:
-    # ???
+    # число обумовленості: (aka condition number)
+    print("Condition number: ", np.linalg.cond(A))# ???
 
     print("Solution:")
     print(x)
@@ -123,6 +123,7 @@ def gauss_method(A_for_Gauss):  # this doesn't work properly
     # determinant:
     print("Determinant: ", np.linalg.det(A))
     # число обумовленості:
+    print("Condition number: ", np.linalg.cond(A))
     # ???
 
     # Solve equation Ax=b for an upper triangular matrix A

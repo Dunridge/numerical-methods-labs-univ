@@ -1,6 +1,5 @@
 # Maksym Polinka K-34
-# (варіант 7: 3*х + cos(x) + 1 = 0)
-
+# варіант 7: choose the example yourself
 
 # use www.wolframalpha.com
 
@@ -15,7 +14,6 @@
 # don't forget to write the report at the end
 
 import numpy as np
-import math
 
 
 def incorrect_method_number():
@@ -40,6 +38,7 @@ A_for_Gauss = np.array([[8., 1., -4., 6.],
                         [2., -6., 1., -9.],
                         [-1., 1., 4., 5.]])
 
+
 # A = np.array([[4., 1., 1.],
 # # #               [1., 5., 0.],
 # # #               [1., 0., 5.]])
@@ -61,7 +60,7 @@ def choose_solution_method(chosen_method):
 
 
 # the solution more or less corresponds with the solution on this
-# webiste: https://studopedia.su/11_130182_primer-reshenie-slau-metodom-yakobi.html
+# website: https://studopedia.su/11_130182_primer-reshenie-slau-metodom-yakobi.html
 def jacobi_method(iteration_limit):  # this doesn't work properly (you have to input the accuracy: see the first one)
     # prints the system
     print("System:")
@@ -88,7 +87,7 @@ def jacobi_method(iteration_limit):  # this doesn't work properly (you have to i
     # determinant:
     print("Determinant: ", np.linalg.det(A))
     # число обумовленості: (aka condition number)
-    print("Condition number: ", np.linalg.cond(A))# ???
+    print("Condition number: ", np.linalg.cond(A))
 
     print("Solution:")
     print(x)
@@ -124,7 +123,6 @@ def gauss_method(A_for_Gauss):  # this doesn't work properly
     print("Determinant: ", np.linalg.det(A))
     # число обумовленості:
     print("Condition number: ", np.linalg.cond(A))
-    # ???
 
     # Solve equation Ax=b for an upper triangular matrix A
     x = []

@@ -41,10 +41,10 @@ A_for_Gauss = np.array([[8., 1., -4., 6.],
                         [-1., 1., 4., 5.]])
 
 # A = np.array([[4., 1., 1.],
-#               [1., 5., 0.],
-#               [1., 0., 5.]])
-#
-# b = np.array([4., 1., 1.])
+# # #               [1., 5., 0.],
+# # #               [1., 0., 5.]])
+# # #
+# # # b = np.array([4., 1., 1.])
 
 
 def choose_solution_method(chosen_method):
@@ -84,6 +84,12 @@ def jacobi_method(iteration_limit):  # this doesn't work properly (you have to i
             break
 
         x = x_new
+
+    # determinant:
+    print("Determinant: ", np.linalg.det(A))
+    # число обумовленості:
+    # ???
+
     print("Solution:")
     print(x)
     error = np.dot(A, x) - b
@@ -91,34 +97,39 @@ def jacobi_method(iteration_limit):  # this doesn't work properly (you have to i
     print(error)
 
 
-def gauss_method(A):  # this doesn't work properly
-    m = len(A)
-    assert all([len(row) == m + 1 for row in A[1:]]), "Matrix rows have non-uniform length"
+def gauss_method(A_for_Gauss):  # this doesn't work properly
+    m = len(A_for_Gauss)
+    assert all([len(row) == m + 1 for row in A_for_Gauss[1:]]), "Matrix rows have non-uniform length"
     n = m + 1
 
     for k in range(m):
-        pivots = [abs(A[i][k]) for i in range(k, m)]
+        pivots = [abs(A_for_Gauss[i][k]) for i in range(k, m)]
         i_max = pivots.index(max(pivots)) + k
 
         # Check for singular matrix
-        assert A[i_max][k] != 0, "Matrix is singular!"
+        assert A_for_Gauss[i_max][k] != 0, "Matrix is singular!"
 
         # Swap rows
-        A[k], A[i_max] = A[i_max], A[k]
+        A_for_Gauss[k], A_for_Gauss[i_max] = A_for_Gauss[i_max], A_for_Gauss[k]
 
         for i in range(k + 1, m):
-            f = A[i][k] / A[k][k]
+            f = A_for_Gauss[i][k] / A_for_Gauss[k][k]
             for j in range(k + 1, n):
-                A[i][j] -= A[k][j] * f
+                A_for_Gauss[i][j] -= A_for_Gauss[k][j] * f
 
             # Fill lower triangular matrix with zeros:
-            A[i][k] = 0
+            A_for_Gauss[i][k] = 0
+
+    # determinant:
+    print("Determinant: ", np.linalg.det(A))
+    # число обумовленості:
+    # ???
 
     # Solve equation Ax=b for an upper triangular matrix A
     x = []
     for i in range(m - 1, -1, -1):
-        x.insert(0, A[i][m] / A[i][i])
+        x.insert(0, A_for_Gauss[i][m] / A_for_Gauss[i][i])
         # print(x)  # testing
         for k in range(i - 1, -1, -1):
-            A[k][m] -= A[k][i] * x[0]
+            A_for_Gauss[k][m] -= A_for_Gauss[k][i] * x[0]
     print(x)

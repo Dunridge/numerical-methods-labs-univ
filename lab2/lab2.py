@@ -26,31 +26,43 @@ def not_yet_implemented():
     print("not yet implemented...")
 
 
-# an iteration limit
-ITERATION_LIMIT = 1000
-
 # a matrix for methods that meets the Jacobi requirements
 # initialize the matrix
-A = np.array([[4., 1., 1.],
-              [1., 5., 0.],
-              [1., 0., 5.]])
+A = np.array([[8., 1., -4.],
+              [2., -6., 1.],
+              [-1., 1., 4.]])
 
 # initialize the RHS vector
-b = np.array([4., 1., 1.])
+b = np.array([6., -9., 5.])
+
+# might be non-uniform because it's meant to be n x m+1
+A_for_Gauss = np.array([[8., 1., -4., 6.],
+                        [2., -6., 1., -9.],
+                        [-1., 1., 4., 5.]])
+
+# A = np.array([[4., 1., 1.],
+#               [1., 5., 0.],
+#               [1., 0., 5.]])
+#
+# b = np.array([4., 1., 1.])
 
 
 def choose_solution_method(chosen_method):
     if chosen_method == 1:
-        jacobi_method()
+        # an iteration limit
+        iteration_limit = int(input("choose your number of iterations: "))
+        jacobi_method(iteration_limit)
         return
     if chosen_method == 2:
+        gauss_method(A_for_Gauss)  # checking
         return
     else:
         incorrect_method_number()
 
 
-# not sure whether this is correct
-def jacobi_method():  # this doesn't work properly (you have to input the accuracy: see the first one)
+# the solution more or less corresponds with the solution on this
+# webiste: https://studopedia.su/11_130182_primer-reshenie-slau-metodom-yakobi.html
+def jacobi_method(iteration_limit):  # this doesn't work properly (you have to input the accuracy: see the first one)
     # prints the system
     print("System:")
     for i in range(A.shape[0]):
@@ -59,7 +71,7 @@ def jacobi_method():  # this doesn't work properly (you have to input the accura
     print()
 
     x = np.zeros_like(b)
-    for it_count in range(ITERATION_LIMIT):
+    for it_count in range(iteration_limit):
         print("Current solution:", x)
         x_new = np.zeros_like(x)
 
@@ -79,7 +91,7 @@ def jacobi_method():  # this doesn't work properly (you have to input the accura
     print(error)
 
 
-def gauss_method():  # this doesn't work properly
+def gauss_method(A):  # this doesn't work properly
     m = len(A)
     assert all([len(row) == m + 1 for row in A[1:]]), "Matrix rows have non-uniform length"
     n = m + 1
@@ -106,6 +118,7 @@ def gauss_method():  # this doesn't work properly
     x = []
     for i in range(m - 1, -1, -1):
         x.insert(0, A[i][m] / A[i][i])
+        # print(x)  # testing
         for k in range(i - 1, -1, -1):
             A[k][m] -= A[k][i] * x[0]
     print(x)

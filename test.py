@@ -1,57 +1,87 @@
+
+#finding eigenvalues with numpy
+
+# Load library
 import numpy as np
 
-# # a matrix for methods that meets the Jacobi requirements
-# # initialize the matrix
-# A = np.array([[4., 1., 1.],
-#               [1., 5., 0.],
-#               [1., 0., 5.]])
-# 
-# # initialize the RHS vector
-# b = np.array([4., 1., 1.])
-# 
+# Create matrix
+matrix = np.array([[1, -1, 3],
+                   [1, 1, 6],
+                   [3, 8, 9]])
 
-#ITERATION_LIMIT = 1000
-ITERATION_LIMIT = int(input("choose your number of iterations: ")) # testing
+# Calculate eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(matrix)
 
-A = np.array([[8., 1., -4.],
-              [2., -6., 1.],
-              [-1., 1., 4.]])
+print("Eigenvalues for given matrix: ", eigenvalues)
+print("Maximum eigenvalue: ", eigenvalues.max())
+print("Minimum eigenvalue: ", eigenvalues.min())
 
-b = np.array([6., -9., 5.])
+#eigenvectors are not necessary -->
+#print("Eigenvectors for given matrix:  ")
+#print (eigenvectors)
 
 
-def jacobi_method():  # this doesn't work properly (you have to input the accuracy: see the first one)
-    # prints the system
-    print("System:")
-    for i in range(A.shape[0]):
-        row = ["{}*x{}".format(A[i, j], j + 1) for j in range(A.shape[1])]
-        print(" + ".join(row), "=", b[i])
-    print()
-
-    x = np.zeros_like(b)
-    for it_count in range(ITERATION_LIMIT):
-        print("Current solution:", x)
-        x_new = np.zeros_like(x)
-
-        for i in range(A.shape[0]):
-            s1 = np.dot(A[i, :i], x[:i])
-            s2 = np.dot(A[i, i + 1:], x[i + 1:])
-            x_new[i] = (b[i] - s1 - s2) / A[i, i]
-
-        if np.allclose(x, x_new, atol=1e-10, rtol=0.):
-            break
-
-        x = x_new
-    print("Solution:")
-    print(x)
-    error = np.dot(A, x) - b
-    print("Error:")
-    print(error)
 
 
-print("jacobi method: ")
 
-jacobi_method()
+
+
+
+
+# import numpy as np
+#
+# # # a matrix for methods that meets the Jacobi requirements
+# # # initialize the matrix
+# # A = np.array([[4., 1., 1.],
+# #               [1., 5., 0.],
+# #               [1., 0., 5.]])
+# #
+# # # initialize the RHS vector
+# # b = np.array([4., 1., 1.])
+# #
+#
+# #ITERATION_LIMIT = 1000
+# ITERATION_LIMIT = int(input("choose your number of iterations: ")) # testing
+#
+# A = np.array([[8., 1., -4.],
+#               [2., -6., 1.],
+#               [-1., 1., 4.]])
+#
+# b = np.array([6., -9., 5.])
+#
+#
+# def jacobi_method():  # this doesn't work properly (you have to input the accuracy: see the first one)
+#     # prints the system
+#     print("System:")
+#     for i in range(A.shape[0]):
+#         row = ["{}*x{}".format(A[i, j], j + 1) for j in range(A.shape[1])]
+#         print(" + ".join(row), "=", b[i])
+#     print()
+#
+#     x = np.zeros_like(b)
+#     for it_count in range(ITERATION_LIMIT):
+#         print("Current solution:", x)
+#         x_new = np.zeros_like(x)
+#
+#         for i in range(A.shape[0]):
+#             s1 = np.dot(A[i, :i], x[:i])
+#             s2 = np.dot(A[i, i + 1:], x[i + 1:])
+#             x_new[i] = (b[i] - s1 - s2) / A[i, i]
+#
+#         if np.allclose(x, x_new, atol=1e-10, rtol=0.):
+#             break
+#
+#         x = x_new
+#     print("Solution:")
+#     print(x)
+#     error = np.dot(A, x) - b
+#     print("Error:")
+#     print(error)
+#
+#
+# print("jacobi method: ")
+#
+# jacobi_method()
 # the solution seems to be correct: tinker with decreasing or increasing the number of iterations
 
 

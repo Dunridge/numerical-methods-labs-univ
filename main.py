@@ -2,6 +2,7 @@
 
 import lab1.lab1 as lr1
 import lab2.lab2 as lr2
+import lab3.lab3 as lr3
 
 
 def incorrect_method_number():
@@ -18,6 +19,11 @@ def choose_lab(lab_number):
         return
     if lab_number == 2:
         lr2.choose_solution_method(int(input("please, choose a solution method (1 - Jacobi, 2 - Gauss): ")))
+        return
+    if lab_number == 3:
+        not_yet_implemented()
+        lr3.choose_solution_method()
+
         return
     else:
         incorrect_method_number()

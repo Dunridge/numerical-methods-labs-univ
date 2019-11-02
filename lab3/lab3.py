@@ -30,7 +30,6 @@ def not_yet_implemented():
     print("not yet implemented...")
 
 
-# TODO: input the Git repository with the C++ code here
 def implemented_in_another_language():
     print("this method was implemented in C++ because of the do while functionality,"
           " see this repository with C++ code to see more: https://github.com/Dunridge/numerical-methods-lab3-univ )")

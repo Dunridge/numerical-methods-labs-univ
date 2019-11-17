@@ -4,6 +4,7 @@ import lab1.lab1 as lr1
 import lab2.lab2 as lr2
 import lab3.lab3 as lr3
 import lab4.lab4 as lr4
+import lab5.lab5 as lr5
 
 
 def incorrect_method_number():
@@ -26,6 +27,9 @@ def choose_lab(lab_number):
         return
     if lab_number == 4:
         lr4.choose_solution_method()
+        return
+    if lab_number == 5:
+        lr5.choose_solution_method()
         return
     else:
         incorrect_method_number()

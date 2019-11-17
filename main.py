@@ -22,10 +22,10 @@ def choose_lab(lab_number):
         lr2.choose_solution_method(int(input("please, choose a solution method (1 - Jacobi, 2 - Gauss): ")))
         return
     if lab_number == 3:
-        lr3.choose_solution_method()
+        lr3.choose_solution_method(1)
+        return
     if lab_number == 4:
-        lr4.choose_solution_method(int(input("please, enter the solution method (): ")))
-        not_yet_implemented()
+        lr4.choose_solution_method()
         return
     else:
         incorrect_method_number()

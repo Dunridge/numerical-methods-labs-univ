@@ -18,10 +18,13 @@ def simpson_method(f):
     # print(partition_step) # must be 0.4 --> correct!
     # (aka h variable from your notes) partition_step = 0.4 <--- that's what we increase by
     x_i = [a, a + partition_step, b]
+    test_print(x_i)
+    print("\n")
     # TODO: at the end see if this influences the result (see the comment below)
     # for some reason the second element is rounded only to the fifth number
     f_i = [round(f(x_i[0]), 6), round(f(x_i[1]), 5), round(f(x_i[2]), 6)]
-    # test_print(f_i)
+    test_print(f_i)
+    print("\n")
     # test_print(x_i)  # prints correctly although the precision is off
     # test_print(f_i)
     # write the Simpson equation:
@@ -31,17 +34,21 @@ def simpson_method(f):
     # this corresponds with your notes
     # I_2 has the division_step variable as it's index
     I_2 = round((partition_step / 3) * (f_i[0] + f_i[2] + 4 * f_i[1]), 6)  # initial result
-
+    print("The value of I_2: ", I_2)
     division_step = 4
     partition_step = (b - a) / division_step  # calculates the partition step correctly
     # this array is being printed correctly
     x_i = [a, a + partition_step, a + 2 * partition_step, a + 3 * partition_step, b]
+    test_print(x_i)
+    print("\n")
     f_i = [round(f(x_i[0]), 6), round(f(x_i[1]), 6), round(f(x_i[2]), 6), round(f(x_i[3]), 6), round(f(x_i[4]), 6)]
+    test_print(f_i)
+    print("\n")
     # test_print(x_i)
     # test_print(f_i)
     # this works correctly
     I_4 = round((partition_step / 3) * (f_i[0] + f_i[4] + 2 * f_i[2] + 4 * f_i[1] + 4 * f_i[3]), 6)
-
+    print("The value of I_4: ", I_4)
     # TODO: 0.00216700000000003 not 0.002167 because of the error in calculations (see other TODOs)
     # this prints correctly
     dif = np.abs(I_4 - I_2)  # 0.00216700000000003
@@ -56,7 +63,7 @@ def simpson_method(f):
 # for debugging
 def test_print(arr):
     for elem in arr:
-        print(elem)
+        print(elem, end=',')
 
 
 def choose_solution_method():
@@ -65,3 +72,5 @@ def choose_solution_method():
     simpson_method(f)
 
     return
+
+
